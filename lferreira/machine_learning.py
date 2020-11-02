@@ -103,6 +103,6 @@ EPOCHS=40
 model = crear_modeloFF()
 
 #history=model.fit(x_train,y_train,epochs=EPOCHS,validation_data=(x_val,y_val),batch_size=PASOS)
-results=model.predict(x_val)
+#results=model.predict(x_val)
 
-print (results)
+#print (results)

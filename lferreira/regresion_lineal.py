@@ -1,5 +1,5 @@
 import numpy as np
-from Data import get_CasosTotales
+from Data import Tcasos
 import matplotlib.pyplot as plt
 from sklearn import linear_model
 from sklearn.metrics import mean_squared_error
@@ -7,7 +7,7 @@ from sklearn.metrics import mean_squared_error
 
 
 
-data = get_CasosTotales()['Magallanes']
+data = Tcasos()['Magallanes']
 
 y = []
 for i in range(len(data)):
