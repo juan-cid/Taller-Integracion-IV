@@ -4,8 +4,9 @@ import numpy as np
 import Data as dget
 from ArimaModel import *
 import matplotlib.pyplot as plt
+import datetime as dt
 
-def Prediccion():
+def Prediccion(steps):
 	st.title("Predicciones Casos")
 
 	data = dget.Tcasos()
@@ -18,9 +19,8 @@ def Prediccion():
 	if len(region_sel) == 0:
 		st.error("Por favor, ingrese una región")
 	else:
-		steps = 100
 		fig = plt.figure()
-		plt.title("Prediccion de casos 100 dias ")
+		plt.title("Prediccion de casos "+str(steps)+" dias ")
 		for i in range(len(region_sel)) :
 			 name = region_sel[i]
 			 plt.plot(PrediccionCasos(data[name],steps),label=name)
@@ -37,8 +37,29 @@ opt = st.sidebar.radio("",
     ("Predicciones Casos", "Muertes")
 )
 
+#obtiene el dia actual
+
+today = dt.date.today()
+pred = today + dt.timedelta(days=100)
+
+
+st.sidebar.title("Predicion de datos")
+comienzo = st.sidebar.date_input('Comienzo',today)
+fin      = st.sidebar.date_input('Fin',pred)
+ 
+steps = (fin-comienzo).days
+print(steps)
+
+
+if(today < pred):
+	 st.sidebar.success('Comienzo: `%s`\n\nFecha final:`%s`' % (today, fin))
+	 
+	 st.sidebar.success("Dias a predecir : "+str(steps) )
+	
+else:
+	st.sidebar.error("Fecha final debe ser mayor a la actual ")
 
 if opt == "Predicciones Casos":
-    Prediccion()
+	Prediccion(steps)
 elif opt == "Muertes":
 	pass

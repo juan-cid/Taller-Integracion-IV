@@ -9,7 +9,6 @@ import plotly.express as px
 
 def PrediccionCasos(data,steps):
 	#Regulariza fechas
-	print(data)
 	df = pd.DataFrame({'casos':list(data.values)})
 	df.index=pd.to_datetime(list(data.index))
 	# create a differenced series
