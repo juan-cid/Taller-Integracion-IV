@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import Data as dget
 from ArimaModel import *
-import plotly.express as px 
+import plotly.graph_objects as go
 import datetime as dt
 
 def Prediccion(steps):
@@ -37,7 +37,11 @@ def Prediccion(steps):
 		#obtiene el rango de fecha desde el inicio de la pandemia + los dias de prediccion
 		range_t = pd.date_range(inicio,periods=len(da2[region_sel[0]]),freq='D')
 		df = pd.DataFrame(da2,index=range_t)
-		fig = px.line(df, x=df.index, y=region_sel)
+		fig = go.Figure()
+		for i in region_sel:
+			fig.add_trace(go.Scatter(x=df.index, y=df[i],mode='lines',name="Prediccion "+i))
+			fig.add_trace(go.Scatter(x=data.index, y=data[i],mode='lines',
+				name="Datos oficiales "+ i))
 		st.plotly_chart(fig)
 
 def Muertes(steps):
@@ -70,12 +74,16 @@ def Muertes(steps):
 		#obtiene el rango de fecha desde el inicio de la pandemia + los dias de prediccion
 		range_t = pd.date_range(inicio,periods=len(da2[region_sel[0]]),freq='D')
 		df = pd.DataFrame(da2,index=range_t)
-		fig = px.line(df, x=df.index, y=region_sel)
+		fig = go.Figure()
+		for i in region_sel:
+			fig.add_trace(go.Scatter(x=df.index, y=df[i],mode='lines',name="Prediccion "+i))
+			fig.add_trace(go.Scatter(x=data.index, y=data[i],mode='lines',
+				name="Datos oficiales "+ i))
 		st.plotly_chart(fig)
 # Sidebar   
 st.sidebar.title('Navegación')
 opt = st.sidebar.radio("",
-    ("Predicciones Casos", "Muertes")
+    ("Predicciones Casos", "Prediccion Muertes")
 )
 
 #obtiene el dia actual
@@ -102,5 +110,5 @@ else:
 
 if opt == "Predicciones Casos":
 	Prediccion(steps)
-elif opt == "Muertes":
+elif opt == "Prediccion Muertes":
 	Muertes(steps)

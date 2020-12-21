@@ -1,4 +1,4 @@
-import plotly.express as px 
+import plotly.graph_objects as go
 import Data as dget
 from pandas import *
 from ArimaModel import *
@@ -6,37 +6,8 @@ from ArimaModel import *
 data1 = dget.Tmuertes()
 data2 = dget.Tcasos()
 
-
-columnas = list(data1.columns[1:]) # obtiene las columnas 
-regiones = list(data1['Region'])   # obtiene las regiones
-
-#diccionario para guardar los datos
-datos = {}
-
-#llena el diccionario con datos vacios
-for i in regiones:
-	datos[i] = []
-
-#reforma las fechas en formato de pandas
-for i in range(len(columnas)):
-	columnas[i] = to_datetime(columnas[i],format='%Y%m%d',errors="ignore")
-
-
-for  i in columnas:
-	muertes = data1[i]
-	ind = 0 
-	for j in datos :
-		datos[j].append(muertes[ind])
-		ind +=1
-
-#guarda los datos modificados con indice en las fechas
-df = DataFrame(datos,index=columnas)
-
-
-
-
 col = ["Los Lagos"]
-steps=10
+steps=100
 da ={}
 
 for i in range(len(col)) :
@@ -60,4 +31,9 @@ ultimo = data2.index[len(data2)-1]
 #obtiene el rango de fecha desde el inicio de la pandemia + los dias de prediccion
 range_t = date_range(inicio,periods=len(da2[col[0]]),freq='D')
 df = DataFrame(da2,index=range_t)
-fig = px.line(df, x=df.index, y=col, title='Cantidad de Muertos')
+fig = go.Figure()
+#px.line(df, x=df.index, y=col, title='Cantidad de Muertos')
+fig.add_trace(go.Scatter(x=df.index, y=df[col[0]],mode='lines',name=col[0]))
+fig.add_trace(go.Scatter(x=data2.index, y=data2[col[0]],mode='lines',
+	name="Datos oficiales "+ col[0]))
+fig.show()
