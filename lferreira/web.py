@@ -10,7 +10,7 @@ def Prediccion(steps):
 	st.title("Predicciones Casos")
 
 	data = dget.Tcasos()
-	options = list(data.columns) + ["Todas las regiones"]
+	options = list(data.columns)
 	region_sel = st.sidebar.multiselect(
 		"Elegir regiones", options, ["Araucanía","Atacama"]
 	)
@@ -48,7 +48,7 @@ def Muertes(steps):
 	st.title("Predicciones Muertes")
 
 	data = dget.Tmuertes()
-	options = list(data.columns) + ["Todas las regiones"]
+	options = list(data.columns) 
 	region_sel = st.sidebar.multiselect(
 			"Elegir regiones", options, ["Araucanía","Atacama"]
 	)
