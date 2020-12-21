@@ -59,8 +59,5 @@ ultimo = data2.index[len(data2)-1]
 
 #obtiene el rango de fecha desde el inicio de la pandemia + los dias de prediccion
 range_t = date_range(inicio,periods=len(da2[col[0]]),freq='D')
-
-
 df = DataFrame(da2,index=range_t)
 fig = px.line(df, x=df.index, y=col, title='Cantidad de Muertos')
-fig.show()
